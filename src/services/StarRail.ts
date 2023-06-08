@@ -53,7 +53,7 @@ export default class StarRail {
       if (current_stamina >= 100) {
         notification(current_stamina, max_stamina, stamina_recover_time);
       };
-    }, 1 * 10000);
+    }, 60 * 60000);
   };
 
 }

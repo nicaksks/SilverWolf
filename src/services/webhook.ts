@@ -9,7 +9,7 @@ export default function webhook(stamina: number, max: number, time: number) {
   axios.post(url, {
     'username': name,
     'avatar_url': avatar,
-    'content': `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${stamina}/${max}** \nVocê vai receber mais um ponto de stamina em **${staminaTime(stamina, max, time)}** \nSua stamina vai ficar **${max}/${max}** em **${ staminaFull(time)}**`
+    'content': `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${stamina}/${max}** \n${staminaTime(stamina, max, time)} \n${staminaFull(time, stamina, max)}`
   })
     .then(() => console.log('[Webhook] - Enviado com sucesso.'))
     .catch(e => console.log(e));

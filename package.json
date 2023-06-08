@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsup src",
     "start": "node dist/index.js",
+    "build:start": "tsup src && node dist/index.js",
     "dev:start": "tsup src && node dist/index.js",
     "dev": "tsx src/index.ts",
     "dev:watch": "tsx watch src/index.ts"
