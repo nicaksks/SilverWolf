@@ -32,7 +32,6 @@ export default class StarRail {
       headers: {
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) miHoYoBBSOversea/1.5.0',
         'Cookie': `account_id=${this._accountId}; cookie_token=${this._cookie}; ltoken=${this._token}; ltuid=${this._accountId}; mi18nLang=en-us;`,
-        'DS': ds(),
         'x-rpc-app_version': app_version,
         'x-rpc-client_type': client_type,
         'x-rpc-language': 'en-us'
@@ -48,6 +47,7 @@ export default class StarRail {
 
   public send() {
     setInterval(async () => {
+      this._instance.defaults.headers['DS'] = ds();
       const { current_stamina, max_stamina, stamina_recover_time } = await this.stamina();
       webhook(current_stamina, max_stamina, stamina_recover_time);
       if (current_stamina >= 100) {
