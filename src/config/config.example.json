@@ -1,0 +1,11 @@
+{
+  "rpc": {
+    "app_version": "1.5.0",
+    "client_type": 5
+  },
+  "discord": {
+    "name": "Silver Wolf",
+    "avatar": "https://i.imgur.com/E72rYQ9.png",
+    "url": ""
+  }
+}
