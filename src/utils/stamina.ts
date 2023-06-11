@@ -12,7 +12,7 @@ export function staminaTime(currentStamina: number, maxStamina: number, remainin
   return message;
 }
 
-export function staminaFull(seconds: number, currentStamina: number, maxStamina: number): string {
+export function staminaFull(currentStamina: number, maxStamina: number, seconds: number): string {
   const hours: string = Math.floor(seconds / 3600).toString().padStart(2, '0');
   const minutes: string = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
 

@@ -2,8 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 import { rpc } from '../config/config.json';
 
 import Account from '../interface/Account';
-import webhook from '../services/webhook';
-import notification from './notification';
+import Webhook from './Webhook';
+import Windows from './Windows';
 import ds from '../utils/ds';
 
 const { app_version, client_type } = rpc;
@@ -49,9 +49,9 @@ export default class StarRail {
     setInterval(async () => {
       this._instance.defaults.headers['DS'] = ds();
       const { current_stamina, max_stamina, stamina_recover_time } = await this.stamina();
-      webhook(current_stamina, max_stamina, stamina_recover_time);
-      if (current_stamina >= 100) {
-        notification(current_stamina, max_stamina, stamina_recover_time);
+      new Webhook({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time }).send();
+      if (current_stamina >= 10) {
+        new Windows({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time });
       };
     }, 60 * 60000);
   };
