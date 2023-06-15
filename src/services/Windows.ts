@@ -3,27 +3,25 @@ import path from 'node:path';
 import Stamina from '../interface/Stamina';
 
 import { discord } from '../config/config.json';
-import { staminaFull } from '../utils/stamina';
 
 export default class Windows {
 
-  private readonly _stamina: number;
-  private readonly _max: number;
+  private readonly _notification: object;
 
   constructor(account: Stamina) {
     const { stamina, max } = account;
-    this._stamina = stamina;
-    this._max = max;
+
+    this._notification = {
+      appName: discord.name,
+      title: 'Atualização da Stamina.',
+      icon: path.join(__dirname, '../assets/silverwolf.png'),
+      message: `Stamina atual: ${stamina}/${max}`,
+    };
+
     this.notification();
   }
 
   private notification() {
-    const notification = {
-      appName: discord.name,
-      title: 'Atualização da Stamina.',
-      icon: path.join(__dirname, '../assets/silverwolf.png'),
-      message: `Stamina atual: ${this._stamina}/${this._max}`,
-    };
-    notifier.notify(notification);
+    notifier.notify(this._notification);
   };
 }
