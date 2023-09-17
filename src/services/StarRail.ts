@@ -50,9 +50,7 @@ export default class StarRail {
       this._instance.defaults.headers['DS'] = ds();
       const { current_stamina, max_stamina, stamina_recover_time } = await this.stamina();
       new Webhook({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time }).send();
-      if (current_stamina >= 10) {
-        new Windows({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time });
-      };
+      new Windows({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time });
     }, 60 * 60000);
   };
 

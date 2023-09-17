@@ -7,10 +7,15 @@ export default class Webhook {
 
   private readonly _payload: object;
   private readonly _url: string;
+  private readonly _stamina: number;
+  private readonly _maxStamina: number;
 
   constructor(account: Stamina) {
     const { stamina, max, time } = account;
     const { name, avatar, url } = discord;
+
+    this._stamina = stamina;
+    this._maxStamina = max;
 
     this._payload = {
       username: name,
@@ -22,6 +27,7 @@ export default class Webhook {
   }
 
   public async send() {
+    if (this._stamina === this._maxStamina) return;
     return axios.post(this._url, this._payload)
       .then(() => console.log('[Webhook] - Enviado com sucesso.'))
       .catch(e => console.log(e));

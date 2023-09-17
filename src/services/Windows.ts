@@ -18,6 +18,7 @@ export default class Windows {
       message: `Stamina atual: ${stamina}/${max}`,
     };
 
+    if (stamina < 10 || stamina === max) return;
     this.notification();
   }
 
