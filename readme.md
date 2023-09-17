@@ -1,7 +1,7 @@
 # Sobre o Projeto
 - Esse script é para rodar em uma maquina local em vez de um VPS. Caso queira rodar em uma **VPS** desabilite o sistema de **notificão**.
 - Você pode adicionar esse script em sua inicialização para que você possa receber as atualizações da sua **stamina** a cada **x tempo**.
-- Por padrão eu deixei para receber os avisos no **Discord** a cada **1 hora** e as notificações do **Windows** quando a **stamina** for igual ou maior que **100**.
+- Por padrão eu deixei para receber os avisos no **Discord** a cada **1 hora** e as notificações do **Windows** quando a **stamina** for igual ou maior que **10**.
 - Caso você queira alterar essas configurações entre na pasta: **src > services > StarRail**
 
 # Projeto
