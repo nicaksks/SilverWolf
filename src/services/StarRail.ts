@@ -5,6 +5,7 @@ import Account from '../interface/Account';
 import Webhook from './Webhook';
 import Windows from './Windows';
 import ds from '../utils/ds';
+import { Stamina } from '../interface/Stamina';
 
 const { app_version, client_type } = rpc;
 
@@ -34,24 +35,46 @@ export default class StarRail {
         'Cookie': `account_id=${this._accountId}; cookie_token=${this._cookie}; ltoken=${this._token}; ltuid=${this._accountId}; mi18nLang=en-us;`,
         'x-rpc-app_version': app_version,
         'x-rpc-client_type': client_type,
-        'x-rpc-language': 'en-us'
+        'x-rpc-language': 'en-us',
       }
     })
   };
 
-  private async stamina() {
-    return this._instance.get(`/note?server=prod_official_usa&role_id=${this._uid}`)
-      .then(response => response.data.data)
-      .catch(e => console.log(e));
+  updateHeaders() {
+    return this._instance.defaults.headers['DS'] = ds();
+  }
+
+  private async stamina(): Promise<Stamina | undefined> {
+    try {
+      this.updateHeaders();
+      const response = await this._instance.get(`/note?server=prod_official_usa&role_id=${this._uid}`);
+      const data = response.data.data;
+
+      const staminaData: Stamina = {
+        stamina: data.current_stamina,
+        max: data.max_stamina,
+        time: data.stamina_recover_time,
+        reserve: {
+          stamina: data.current_reserve_stamina,
+          reserve_full: data.is_reserve_stamina_full
+        }
+      }
+
+      return staminaData;
+    } catch (e) {
+      console.error(e);
+      return undefined;
+    }
   };
 
   public send() {
     setInterval(async () => {
-      this._instance.defaults.headers['DS'] = ds();
-      const { current_stamina, max_stamina, stamina_recover_time } = await this.stamina();
-      new Webhook({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time }).send();
-      new Windows({ stamina: current_stamina, max: max_stamina, time: stamina_recover_time });
-    }, 60 * 60000);
+      const stamina = await this.stamina();
+      if (!stamina) return;
+
+      new Webhook(stamina).send();
+      new Windows(stamina);
+    }, 6 * 60 * 10000);
   };
 
 }

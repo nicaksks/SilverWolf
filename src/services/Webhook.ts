@@ -1,35 +1,30 @@
-import axios, { AxiosInstance } from 'axios';
-import { staminaTime, staminaFull } from '../utils/stamina';
-import { discord } from '../config/config.json';
-import Stamina from '../interface/Stamina';
+import axios from 'axios';
+import { Stamina } from '../interface/Stamina';
+import body from '../utils/constants';
+import { staminaFull, staminaTime } from '../utils/stamina';
 
 export default class Webhook {
 
-  private readonly _payload: object;
-  private readonly _url: string;
-  private readonly _stamina: number;
-  private readonly _maxStamina: number;
+  private readonly _stamina: Stamina;
 
-  constructor(account: Stamina) {
-    const { stamina, max, time } = account;
-    const { name, avatar, url } = discord;
-
-    this._stamina = stamina;
-    this._maxStamina = max;
-
-    this._payload = {
-      username: name,
-      avatar_url: avatar,
-      content: `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${stamina}/${max}** \n${staminaTime(stamina, max, time)} \n${staminaFull(stamina, max, time)}`
-    };
-
-    this._url = url;
+  constructor(staminaData: Stamina) {
+    this._stamina = staminaData;
   }
 
   public async send() {
-    if (this._stamina === this._maxStamina) return;
-    return axios.post(this._url, this._payload)
+
+    const { url, payload } = body(this._stamina, this.content());
+
+    if (this._stamina.stamina === this._stamina.max && this._stamina.reserve.reserve_full) return;
+    return axios.post(url, payload)
       .then(() => console.log('[Webhook] - Enviado com sucesso.'))
       .catch(e => console.log(e));
   }
+
+  private content(): string {
+    const { stamina, max } = this._stamina;
+
+    const message = `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${stamina}/${max}** \n${staminaTime(this._stamina)} \n${staminaFull(this._stamina)}`
+    return message;
+  };
 }
