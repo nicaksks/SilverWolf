@@ -38,6 +38,8 @@ export default class StarRail {
         'x-rpc-language': 'en-us',
       }
     })
+
+    this.send()
   };
 
   updateHeaders() {
@@ -72,12 +74,13 @@ export default class StarRail {
       const stamina = await this.stamina();
 
       if (!stamina) return;
-      if (stamina.stamina < 10 || stamina.reserve.stamina < 10) return;
-      if (stamina.stamina === stamina.max || stamina.reserve.reserve_full) return;
+      if (stamina.stamina < 10) return;
+      if (stamina.stamina === stamina.max && stamina.reserve.stamina < 10) return;
+      if (stamina.stamina === stamina.max && stamina.reserve.reserve_full) return;
 
-      new Webhook(stamina).send();
+      new Webhook(stamina);
       new Windows(stamina);
-    }, 6 * 60 * 10000);
+    }, 10000);
   };
 
 }

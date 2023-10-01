@@ -9,6 +9,7 @@ export default class Webhook {
 
   constructor(staminaData: Stamina) {
     this._stamina = staminaData;
+    this.send()
   }
 
   public async send() {
