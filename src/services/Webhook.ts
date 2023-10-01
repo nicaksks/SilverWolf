@@ -15,7 +15,6 @@ export default class Webhook {
 
     const { url, payload } = body(this._stamina, this.content());
 
-    if (this._stamina.stamina === this._stamina.max && this._stamina.reserve.reserve_full) return;
     return axios.post(url, payload)
       .then(() => console.log('[Webhook] - Enviado com sucesso.'))
       .catch(e => console.log(e));

@@ -70,7 +70,10 @@ export default class StarRail {
   public send() {
     setInterval(async () => {
       const stamina = await this.stamina();
+
       if (!stamina) return;
+      if (stamina.stamina < 10 || stamina.reserve.stamina < 10) return;
+      if (stamina.stamina === stamina.max || stamina.reserve.reserve_full) return;
 
       new Webhook(stamina).send();
       new Windows(stamina);

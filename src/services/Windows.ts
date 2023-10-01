@@ -10,8 +10,6 @@ export default class Windows {
 
   constructor(staminaData: Stamina) {
     this._stamina = staminaData;
-
-    if (this._stamina.stamina < 10 || this._stamina.stamina === this._stamina.max && this._stamina.reserve.reserve_full) return;
     this.notification();
   }
 
