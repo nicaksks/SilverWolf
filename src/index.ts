@@ -7,4 +7,4 @@ new StarRail({
   accountId:  process.env.ACCOUNTID,
   cookie: process.env.COOKIE,
   token: process.env.TOKEN,
-}).send();
+})
