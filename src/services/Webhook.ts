@@ -22,9 +22,9 @@ export default class Webhook {
   }
 
   private content(): string {
-    const { stamina, max } = this._stamina;
+    const { current_stamina, max_stamina } = this._stamina;
 
-    const message = `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${stamina}/${max}** \n${staminaTime(this._stamina)} \n${staminaFull(this._stamina)}`
+    const message = `Você foi hackeado! \nComo sou uma pessoa gentil eu não irei roubar nada de você. \n\nStamina atual: **${current_stamina}/${max_stamina}** \n${staminaTime(this._stamina)} \n${staminaFull(this._stamina)}`
     return message;
   };
 }

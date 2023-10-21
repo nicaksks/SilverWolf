@@ -19,14 +19,14 @@ export default class Windows {
 
   private content(): object {
 
-    const isStaminaMax = this._stamina.stamina === this._stamina.max;
+    const isStaminaMax = this._stamina.current_stamina === this._stamina.max_stamina;
     const title = isStaminaMax ? 'Atualização da Reserva.' : 'Atualização da Stamina';
 
     const message = {
       appName: discord.name,
       title: title,
       icon: path.join(__dirname, '../assets/silverwolf.png'),
-      message: !isStaminaMax ? `Stamina Atual: ${this._stamina.stamina}/${this._stamina.max}` : `Reserva Atual: ${this._stamina.reserve.stamina}/2400 `,
+      message: !isStaminaMax ? `Stamina Atual: ${this._stamina.current_stamina}/${this._stamina.max_stamina}` : `Reserva Atual: ${this._stamina.current_reserve_stamina}/2400 `,
     };
 
     return message;

@@ -50,18 +50,7 @@ export default class StarRail {
     try {
       this.updateHeaders();
       const response = await this._instance.get(`/note?server=prod_official_usa&role_id=${this._uid}`);
-      const data = response.data.data;
-
-      const staminaData: Stamina = {
-        stamina: data.current_stamina,
-        max: data.max_stamina,
-        time: data.stamina_recover_time,
-        reserve: {
-          stamina: data.current_reserve_stamina,
-          reserve_full: data.is_reserve_stamina_full
-        }
-      }
-
+      const staminaData: Stamina = response.data.data;
       return staminaData;
     } catch (e) {
       console.error(e);
@@ -74,13 +63,13 @@ export default class StarRail {
       const stamina = await this.stamina();
 
       if (!stamina) return;
-      if (stamina.stamina < 10) return;
-      if (stamina.stamina === stamina.max && stamina.reserve.stamina < 10) return;
-      if (stamina.stamina === stamina.max && stamina.reserve.reserve_full) return;
+      if (stamina.current_stamina < 10) return;
+      if (stamina.current_stamina === stamina.max_stamina && stamina.current_reserve_stamina < 10) return;
+      if (stamina.current_stamina === stamina.max_stamina && stamina.is_reserve_stamina_full) return;
 
       new Webhook(stamina);
       new Windows(stamina);
-    }, 10000);
+    }, 6 * 60 * 10000);
   };
 
 }
