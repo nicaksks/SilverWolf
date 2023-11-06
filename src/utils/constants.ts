@@ -6,7 +6,7 @@ interface Body {
   url: string
 }
 
-export default function body(staminaData: Stamina, message: string): Body {
+export default function body(message: string): Body {
 
   const { name, avatar, url } = discord;
 

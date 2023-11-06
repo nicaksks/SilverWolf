@@ -5,11 +5,8 @@ import { discord } from '../config/config.json';
 import { Stamina } from '../interface/Stamina';
 
 export default class Windows {
-
-  private readonly _stamina: Stamina;
-
-  constructor(staminaData: Stamina) {
-    this._stamina = staminaData;
+  
+  constructor(private readonly _stamina: Stamina) {
     this.notification();
   }
 

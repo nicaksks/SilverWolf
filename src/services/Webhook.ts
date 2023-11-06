@@ -5,16 +5,13 @@ import { staminaFull, staminaTime } from '../utils/stamina';
 
 export default class Webhook {
 
-  private readonly _stamina: Stamina;
-
-  constructor(staminaData: Stamina) {
-    this._stamina = staminaData;
+  constructor(private readonly _stamina: Stamina) {
     this.send()
   }
 
   public async send() {
 
-    const { url, payload } = body(this._stamina, this.content());
+    const { url, payload } = body(this.content());
 
     return axios.post(url, payload)
       .then(() => console.log('[Webhook] - Enviado com sucesso.'))
