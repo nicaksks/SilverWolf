@@ -20,7 +20,7 @@ export default class Windows {
     const title = isStaminaMax ? 'Atualização da Reserva.' : 'Atualização da Stamina';
 
     const message = {
-      appName: discord.name,
+      appName: discord.username,
       title: title,
       icon: path.join(__dirname, '../assets/silverwolf.png'),
       message: !isStaminaMax ? `Stamina Atual: ${this._stamina.current_stamina}/${this._stamina.max_stamina}` : `Reserva Atual: ${this._stamina.current_reserve_stamina}/2400 `,
